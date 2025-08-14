@@ -21,12 +21,10 @@ option = ReplyKeyboardMarkup(keyboard=[
 ], resize_keyboard=True)
 
 
+buttons = ['Опция 1', 'Опция 2']
 
-#
-# test = ["кнопка 1", "кнопка 2"]
-#
-# async def test_keyboard():
-#    keyboard = InlineKeyboardBuilder()
-#    for key in test:
-#        keyboard.add(InlineKeyboardButton(text=key, url='https://www.youtube.com/watch?v=HfaIcB4Ogxk'))
-#    return keyboard.adjust(2).as_markup()
+async def keyboard_option():
+   keyboard = InlineKeyboardBuilder()
+   for but in buttons:
+       keyboard.add(InlineKeyboardButton(text=but, callback_data=but))
+   return keyboard.adjust(2).as_markup()

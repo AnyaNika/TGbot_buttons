@@ -15,17 +15,18 @@ dp = Dispatcher()
 
 
 @dp.callback_query(F.data == 'more')
-async def more(message: Message):
-   await message.answer("Опции подгружены", reply_markup=kb.option)
-   # await callback.message.edit_text('Опции подгружены', reply_markup=kb.option)
+async def more(callback: CallbackQuery):
+   await callback.answer("Опции подгружаются", show_alert=True)
+   await callback.message.edit_text(f'Доступные опции:', reply_markup=await kb.keyboard_option())
 
-@dp.message(F.text == "Опция 1")
-async def opt1_button(message: Message):
-   await message.answer('Это текст первой опции')
 
-@dp.message(F.text == "Опция 2")
-async def opt2_button(message: Message):
-   await message.answer('Это текст второй опции')
+@dp.callback_query(F.data == 'Опция 1')
+async def opt1_button(callback: CallbackQuery):
+   await callback.message.answer('Это текст первой опции')
+
+@dp.callback_query(F.data == 'Опция 2')
+async def opt2_button(callback: CallbackQuery):
+   await callback.message.answer('Это текст второй опции')
 
 @dp.message(F.text == "Привет")
 async def hi_button(message: Message):
@@ -45,7 +46,7 @@ async def links(message: Message):
 
 @dp.message(Command('dynamic'))
 async def links(message: Message):
-   await message.answer('Выберите, что Вас интересует:', reply_markup=kb.inline_keyboard_dynamic)
+   await message.answer('Хотите увидеть больше?:', reply_markup=kb.inline_keyboard_dynamic)
 
 @dp.message(CommandStart())
 async def start(message: Message):
